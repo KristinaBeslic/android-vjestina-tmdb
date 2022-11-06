@@ -11,32 +11,41 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun FavouriteButton(
     color: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier.size(dimensionResource(id = R.dimen.favourite_button_size)),
+    isFavourite: Boolean = false,
+    onClick: (Boolean) -> Unit
 ) {
-    var isFavourite by remember { mutableStateOf(false) }
-
     Image(
         painter = painterResource(id = if (isFavourite) R.drawable.ic_favourite_filled else R.drawable.ic_favourite),
         contentDescription = null,
         modifier = modifier
             .clickable {
-                isFavourite = isFavourite.not()
+                onClick(isFavourite.not())
             }
-            .size(32.dp)
             .background(color, CircleShape)
-            .padding(start = 8.dp, end = 8.dp, top = 10.dp, bottom = 10.dp)
+            .padding(
+                start = dimensionResource(id = R.dimen.padding_small), end = dimensionResource(
+                    id = R.dimen.padding_small
+                ), top = dimensionResource(id = R.dimen.padding_medium), bottom = dimensionResource(
+                    id = R.dimen.padding_medium
+                )
+            )
     )
 }
 
 @Preview
 @Composable
-fun FavouriteButtonPreview(){
-    FavouriteButton(colorResource(id = R.color.Gray))
+fun FavouriteButtonPreview() {
+    var isFavourite by remember { mutableStateOf(false) }
+
+    FavouriteButton(colorResource(id = R.color.Gray), isFavourite = isFavourite) {
+        isFavourite = it
+    }
 }

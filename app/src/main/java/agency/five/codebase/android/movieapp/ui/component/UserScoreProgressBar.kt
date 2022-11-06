@@ -1,8 +1,6 @@
 package agency.five.codebase.android.movieapp.ui.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,57 +8,68 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.absoluteValue
+import agency.five.codebase.android.movieapp.R
 
 @Composable
 fun UserScoreProgressBar(
     userScore: Float,
-    modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier,
-    fontSize: TextUnit = 15.sp,
-    radius: Dp = 42.dp,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = dimensionResource(id = R.dimen.user_score_font_size).value.sp,
     color: Color = Color.Green,
-    strokeWidth: Dp = 8.dp
-){
+    strokeWidth: Dp = dimensionResource(id = R.dimen.padding_small)
+) {
     val percentage: Float = userScore / 10
 
-    Box(modifier = modifier.size(radius * 2f),
-        contentAlignment = Alignment.Center){
-        androidx.compose.foundation.Canvas(modifier = Modifier.size(radius * 2f)){
-            drawArc(
-                color = color.copy(0.2f),
-                -90f,
-                360f,
-                useCenter = false,
+    Box(
+        modifier = modifier
+            .width(dimensionResource(id = R.dimen.progress_bar_size))
+            .height(dimensionResource(id = R.dimen.progress_bar_size)),
+        contentAlignment = Alignment.Center
+    ) {
+        androidx.compose.foundation.Canvas(modifier = modifier.fillMaxSize()) {
+            drawCircle(
+                color = color.copy(ProgressBarConstants.CIRCLE_TRANSPARENCY),
+                radius = size.minDimension / 2,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
             drawArc(
                 color = color,
-                -90f,
-                360 * percentage.absoluteValue,
+                ProgressBarConstants.START_ANGLE,
+                ProgressBarConstants.SWEEP_ANGLE * percentage.absoluteValue,
                 useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
         }
-        Text(text = userScore.toString(),
-            modifier = modifier.padding(start = 10.dp,
-                                        end = 7.dp,
-                                        top = 13.dp,
-                                        bottom = 13.dp),
+        Text(
+            text = userScore.toString(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(
+                    start = dimensionResource(id = R.dimen.padding_medium),
+                    top = dimensionResource(id = R.dimen.user_score_padding_top)
+                ),
             color = Color.Black,
             fontSize = fontSize,
-            fontWeight = FontWeight.Bold)
+            fontWeight = FontWeight.Bold
+        )
     }
+}
 
+object ProgressBarConstants {
+    const val START_ANGLE = -90f
+    const val SWEEP_ANGLE = 360
+    const val CIRCLE_TRANSPARENCY = 0.2f
 }
 
 @Preview
 @Composable
-fun UserScoreProgressBarPreview(){
+fun UserScoreProgressBarPreview() {
     UserScoreProgressBar(userScore = 7.5.toFloat())
 }
