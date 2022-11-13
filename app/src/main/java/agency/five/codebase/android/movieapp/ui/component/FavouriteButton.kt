@@ -45,7 +45,7 @@ fun FavouriteButton(
 fun FavouriteButtonPreview() {
     var isFavourite by remember { mutableStateOf(false) }
 
-    FavouriteButton(colorResource(id = R.color.Gray), isFavourite = isFavourite) {
+    FavouriteButton(colorResource(id = R.color.gray), isFavourite = isFavourite) {
         isFavourite = it
     }
 }

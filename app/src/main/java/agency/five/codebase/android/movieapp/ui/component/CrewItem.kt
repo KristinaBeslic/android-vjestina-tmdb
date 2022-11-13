@@ -21,7 +21,9 @@ fun CrewItem(
     crewItemViewState: CrewItemViewState,
     modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier = modifier
+    ) {
         Text(
             text = crewItemViewState.name,
             fontSize = dimensionResource(id = R.dimen.crew_item_font_size).value.sp,

@@ -20,44 +20,38 @@ import coil.compose.AsyncImage
 
 data class MovieCardViewState(
     val imageUrl: String,
-    var isFavorite: MutableState<Boolean>
+    var isFavorite: Boolean
 )
 
 @Composable
 fun MovieCard(
     movieCardViewState: MovieCardViewState,
-    modifier: Modifier = Modifier.size(
-        width = dimensionResource(id = R.dimen.movie_card_width),
-        height = dimensionResource(id = R.dimen.movie_card_height)
-    ),
-    onClick: (Boolean) -> Unit
+    modifier: Modifier = Modifier,
+    onFavouriteClicked: () -> Unit,
+    onMovieCardClicked: () -> Unit
 ) {
     Card(
-        modifier = modifier.clickable { onClick },
+        modifier = modifier.clickable { onMovieCardClicked() },
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape))
     ) {
         Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.TopStart
+            modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopStart
         ) {
             AsyncImage(
                 model = movieCardViewState.imageUrl,
-                contentDescription = "Movie image",
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = modifier.fillMaxSize()
             )
-            FavouriteButton(
-                color = colorResource(R.color.black_favourite_btn).copy(ButtonConstant.BUTTON_TRANSPARENCY),
+            FavouriteButton(color = colorResource(R.color.black_favourite_btn).copy(ButtonConstant.BUTTON_TRANSPARENCY),
                 modifier = modifier
                     .padding(
                         top = dimensionResource(id = R.dimen.padding_small),
                         start = dimensionResource(id = R.dimen.padding_small)
                     )
                     .wrapContentSize(align = Alignment.TopStart),
-                isFavourite = movieCardViewState.isFavorite.value
-            ) {
-                movieCardViewState.isFavorite.value = it
-            }
+                isFavourite = movieCardViewState.isFavorite,
+                onClick = { onFavouriteClicked() })
         }
     }
 }
@@ -72,8 +66,9 @@ fun MovieCardPreview() {
     MovieCard(
         movieCardViewState = MovieCardViewState(
             MoviesMock.getMovieDetails().movie.imageUrl.toString(),
-            isFavorite = remember {
-                mutableStateOf(MoviesMock.getMovieDetails().movie.isFavorite)
-            }), onClick = { }
+            isFavorite = MoviesMock.getMovieDetails().movie.isFavorite
+        ),
+        onFavouriteClicked = {},
+        onMovieCardClicked = {}
     )
 }

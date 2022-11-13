@@ -30,9 +30,13 @@ sealed class MovieCategoryLabelTextViewState {
 fun MovieCategoryLabel(
     movieCategoryLabelViewState: MovieCategoryLabelViewState,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.clickable { onClick }
+    modifier: Modifier = Modifier
 ) {
-    Column {
+    Column(
+        modifier = modifier
+            .clickable { onClick() }
+            .width(intrinsicSize = IntrinsicSize.Max)
+    ) {
         when (val text = movieCategoryLabelViewState.categoryText) {
             is MovieCategoryLabelTextViewState.LabelTextFromString ->
                 Text(
@@ -49,7 +53,7 @@ fun MovieCategoryLabel(
                             color = Color.Gray
                         )
                     }
-            )
+                )
             is MovieCategoryLabelTextViewState.LabelTextFromResource ->
                 Text(
                     text = text.textRes.toString(),
@@ -70,15 +74,17 @@ fun MovieCategoryLabel(
         Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.movie_label_spacer_size)))
 
         if (movieCategoryLabelViewState.isSelected) {
-            Divider(thickness = dimensionResource(id = R.dimen.movie_label_thickness), color = Color.Black)
-        }else{
-            Divider(thickness = dimensionResource(id = R.dimen.movie_label_thickness), color = Color.Black.copy(LabelConstant.LABEL_TRANSPARENCY))
+            Divider(
+                thickness = dimensionResource(id = R.dimen.movie_label_thickness),
+                color = Color.Black
+            )
+        } else {
+            Divider(
+                thickness = dimensionResource(id = R.dimen.movie_label_thickness),
+                color = Color.Transparent
+            )
         }
     }
-}
-
-object LabelConstant {
-    const val LABEL_TRANSPARENCY = 0f
 }
 
 @Preview
@@ -88,7 +94,8 @@ fun MovieCategoryLabelPreview() {
     MovieCategoryLabel(
         movieCategoryLabelViewState = MovieCategoryLabelViewState(
             3,
-            true,
+            false,
             textFromString
-        ), onClick = {})
+        ), onClick = {}
+    )
 }

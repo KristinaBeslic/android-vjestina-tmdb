@@ -28,40 +28,38 @@ fun ActorCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.size(
-            width = dimensionResource(id = R.dimen.actor_card_width),
-            height = dimensionResource(id = R.dimen.actor_card_height)
-        ),
+        modifier = modifier,
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape)),
         elevation = dimensionResource(id = R.dimen.actor_card_elevation)
     ) {
-        AsyncImage(
-            model = actorCardViewState.imageUrl,
-            contentDescription = actorCardViewState.character,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(dimensionResource(id = R.dimen.actor_image))
-                .padding(bottom = dimensionResource(id = R.dimen.actor_image_bottom_padding))
-        )
-        Text(
-            text = actorCardViewState.name,
-            Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_medium),
-                top = dimensionResource(id = R.dimen.actor_name_padding_top)
-            ),
-            fontWeight = FontWeight.Bold,
-            fontSize = dimensionResource(id = R.dimen.actor_name_font_size).value.sp
-        )
-        Text(
-            text = actorCardViewState.character,
-            modifier = modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_medium),
-                top = dimensionResource(id = R.dimen.actor_character_padding_top)
-            ),
-            fontSize = dimensionResource(id = R.dimen.actor_character_font_size).value.sp,
-            color = Color.Gray
-        )
+        Column(modifier = Modifier.fillMaxSize()) {
+            AsyncImage(
+                model = actorCardViewState.imageUrl,
+                contentDescription = actorCardViewState.character,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(dimensionResource(id = R.dimen.actor_image_height))
+            )
+            Text(
+                text = actorCardViewState.name,
+                Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_small)
+                ),
+                fontWeight = FontWeight.Bold,
+                fontSize = dimensionResource(id = R.dimen.actor_name_font_size).value.sp
+            )
+            Text(
+                text = actorCardViewState.character,
+                modifier = modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_small)
+                ),
+                fontSize = dimensionResource(id = R.dimen.actor_character_font_size).value.sp,
+                color = Color.Gray
+            )
+        }
     }
 }
 

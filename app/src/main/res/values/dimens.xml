@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actor_card_width">125dp</dimen>
-    <dimen name="actor_card_height">209dp</dimen>
     <dimen name="actor_card_elevation">5dp</dimen>
-    <dimen name="actor_image">170dp</dimen>
-    <dimen name="actor_image_bottom_padding">68dp</dimen>
-    <dimen name="actor_name_padding_top">147dp</dimen>
-    <dimen name="actor_character_padding_top">185dp</dimen>
+    <dimen name="actor_image_height">170dp</dimen>
     <dimen name="favourite_button_size">32dp</dimen>
     <dimen name="movie_card_width">122dp</dimen>
     <dimen name="movie_card_height">179dp</dimen>

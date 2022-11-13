@@ -14,8 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import kotlin.math.absoluteValue
 import agency.five.codebase.android.movieapp.R
+import androidx.compose.foundation.Canvas
+import kotlin.math.absoluteValue
 
 @Composable
 fun UserScoreProgressBar(
@@ -28,33 +29,27 @@ fun UserScoreProgressBar(
     val percentage: Float = userScore / 10
 
     Box(
-        modifier = modifier
-            .width(dimensionResource(id = R.dimen.progress_bar_size))
-            .height(dimensionResource(id = R.dimen.progress_bar_size)),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        androidx.compose.foundation.Canvas(modifier = modifier.fillMaxSize()) {
-            drawCircle(
+        Canvas(modifier = modifier.fillMaxSize()) {
+            drawArc(
                 color = color.copy(ProgressBarConstants.CIRCLE_TRANSPARENCY),
-                radius = size.minDimension / 2,
+                ProgressBarConstants.START_ANGLE,
+                ProgressBarConstants.SWEEP_ANGLE.toFloat(),
+                useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
             drawArc(
                 color = color,
                 ProgressBarConstants.START_ANGLE,
-                ProgressBarConstants.SWEEP_ANGLE * percentage.absoluteValue,
+                 ProgressBarConstants.SWEEP_ANGLE * percentage.absoluteValue,
                 useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
         }
         Text(
             text = userScore.toString(),
-            modifier = modifier
-                .fillMaxSize()
-                .padding(
-                    start = dimensionResource(id = R.dimen.padding_medium),
-                    top = dimensionResource(id = R.dimen.user_score_padding_top)
-                ),
             color = Color.Black,
             fontSize = fontSize,
             fontWeight = FontWeight.Bold
