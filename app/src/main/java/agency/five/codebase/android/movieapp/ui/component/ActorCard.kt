@@ -52,7 +52,7 @@ fun ActorCard(
             )
             Text(
                 text = actorCardViewState.character,
-                modifier = modifier.padding(
+                modifier = Modifier.padding(
                     start = dimensionResource(id = R.dimen.padding_small),
                     top = dimensionResource(id = R.dimen.padding_small)
                 ),

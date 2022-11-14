@@ -32,7 +32,7 @@ fun UserScoreProgressBar(
         modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        Canvas(modifier = modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
             drawArc(
                 color = color.copy(ProgressBarConstants.CIRCLE_TRANSPARENCY),
                 ProgressBarConstants.START_ANGLE,

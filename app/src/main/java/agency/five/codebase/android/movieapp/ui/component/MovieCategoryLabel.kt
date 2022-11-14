@@ -71,7 +71,7 @@ fun MovieCategoryLabel(
                     }
                 )
         }
-        Spacer(modifier = modifier.size(dimensionResource(id = R.dimen.movie_label_spacer_size)))
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.movie_label_spacer_size)))
 
         if (movieCategoryLabelViewState.isSelected) {
             Divider(
@@ -94,7 +94,7 @@ fun MovieCategoryLabelPreview() {
     MovieCategoryLabel(
         movieCategoryLabelViewState = MovieCategoryLabelViewState(
             3,
-            false,
+            true,
             textFromString
         ), onClick = {}
     )

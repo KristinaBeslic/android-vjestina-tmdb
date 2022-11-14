@@ -35,16 +35,16 @@ fun MovieCard(
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape))
     ) {
         Box(
-            modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopStart
+            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart
         ) {
             AsyncImage(
                 model = movieCardViewState.imageUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
             FavouriteButton(color = colorResource(R.color.black_favourite_btn).copy(ButtonConstant.BUTTON_TRANSPARENCY),
-                modifier = modifier
+                modifier = Modifier
                     .padding(
                         top = dimensionResource(id = R.dimen.padding_small),
                         start = dimensionResource(id = R.dimen.padding_small)
