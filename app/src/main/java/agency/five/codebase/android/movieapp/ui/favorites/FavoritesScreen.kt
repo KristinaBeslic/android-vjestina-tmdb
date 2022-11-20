@@ -23,6 +23,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 
 private val favoritesMapper: FavoritesMapper = FavoritesMapperImpl()
 val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMoviesList())
@@ -34,9 +35,6 @@ fun FavoritesRoute(
     val favoritesViewState by remember { mutableStateOf(favoritesViewState) }
 
     FavoritesScreen(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.padding_medium)),
         favoritesViewState = favoritesViewState,
         onNavigateToMovieDetails = onNavigateToMovieDetails
     )
@@ -50,8 +48,13 @@ fun FavoritesHeader(
         Text(
             text = stringResource(id = R.string.favorites),
             modifier = modifier
-                .fillMaxWidth(),
-            fontWeight = FontWeight.Bold
+                .fillMaxWidth()
+                .padding(
+                    start = dimensionResource(id = R.dimen.padding_medium),
+                    top = dimensionResource(id = R.dimen.favorite_screen_header_padding_top)
+                ),
+            fontWeight = FontWeight.Bold,
+            fontSize = dimensionResource(id = R.dimen.favorites_font_size).value.sp
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.favorite_screen_header_spacer)))
     }
@@ -59,14 +62,18 @@ fun FavoritesHeader(
 
 @Composable
 fun FavoritesScreen(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     favoritesViewState: FavoritesViewState,
     onNavigateToMovieDetails: (Int) -> Unit
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(dimensionResource(id = R.dimen.padding_medium))
+    ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.favorite_screen_grid_padding)),
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium)),
             content = {
                 item(
@@ -86,19 +93,20 @@ fun FavoritesScreen(
                         when (LocalConfiguration.current.orientation) {
                             Configuration.ORIENTATION_LANDSCAPE -> {
                                 Modifier.size(
-                                    dimensionResource(id = R.dimen.movie_card_width_favourite_screen),
-                                    dimensionResource(id = R.dimen.movie_card_height_favourite_screen_landscape)
+                                    dimensionResource(id = R.dimen.favourite_screen_movie_card_width),
+                                    dimensionResource(id = R.dimen.favourite_screen_landscape_movie_card_height)
                                 )
                             }
                             else -> {
                                 Modifier.size(
-                                    dimensionResource(id = R.dimen.movie_card_width_favourite_screen),
-                                    dimensionResource(id = R.dimen.movie_card_height_favourite_screen)
+                                    dimensionResource(id = R.dimen.favourite_screen_movie_card_width),
+                                    dimensionResource(id = R.dimen.favourite_screen_movie_card_height)
                                 )
                             }
                         },
-                        onFavouriteClicked = {  },
-                        onMovieCardClicked = { onNavigateToMovieDetails(card.id) })
+                        onFavouriteClicked = { },
+                        onMovieCardClicked = { onNavigateToMovieDetails(card.id) }
+                    )
                 }
             }
         )
@@ -110,9 +118,6 @@ fun FavoritesScreen(
 fun FavoritesScreenPreview() {
     MovieAppTheme {
         FavoritesScreen(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(dimensionResource(id = R.dimen.padding_large)),
             favoritesViewState = favoritesViewState,
             onNavigateToMovieDetails = {}
         )

@@ -20,11 +20,12 @@
     <dimen name="user_score_padding_top">13dp</dimen>
     <dimen name="user_score_stroke_width">4dp</dimen>
 
-    <dimen name="favorite_header_padding_top">90dp</dimen>
-    <dimen name="movie_card_width_favourite_screen">105dp</dimen>
-    <dimen name="movie_card_height_favourite_screen">154dp</dimen>
-    <dimen name="movie_card_height_favourite_screen_landscape">300dp</dimen>
-    <dimen name="favorite_screen_header_spacer">30dp</dimen>
+    <dimen name="favourite_screen_movie_card_width">105dp</dimen>
+    <dimen name="favourite_screen_movie_card_height">154dp</dimen>
+    <dimen name="favourite_screen_landscape_movie_card_height">300dp</dimen>
+    <dimen name="favorite_screen_header_spacer">20dp</dimen>
+    <dimen name="favorite_screen_header_padding_top">35dp</dimen>
+    <dimen name="favorite_screen_grid_padding">35dp</dimen>
 
     <dimen name="movie_details_user_score_size">42dp</dimen>
     <dimen name="movie_details_header_size">303dp</dimen>

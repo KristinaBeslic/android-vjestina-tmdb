@@ -161,7 +161,6 @@ fun MovieDetailsOverview(
                 end = dimensionResource(
                     id = R.dimen.movie_details_overview_text_padding_end
                 )
-
             )
         )
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.padding_large)))
