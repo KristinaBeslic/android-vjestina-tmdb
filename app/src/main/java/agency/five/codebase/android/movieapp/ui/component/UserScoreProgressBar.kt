@@ -24,7 +24,8 @@ fun UserScoreProgressBar(
     modifier: Modifier = Modifier,
     fontSize: TextUnit = dimensionResource(id = R.dimen.user_score_font_size).value.sp,
     color: Color = Color.Green,
-    strokeWidth: Dp = dimensionResource(id = R.dimen.padding_small)
+    textColor: Color = Color.Black,
+    strokeWidth: Dp = dimensionResource(id = R.dimen.user_score_stroke_width)
 ) {
     val percentage: Float = userScore / 10
 
@@ -50,7 +51,7 @@ fun UserScoreProgressBar(
         }
         Text(
             text = userScore.toString(),
-            color = Color.Black,
+            color = textColor,
             fontSize = fontSize,
             fontWeight = FontWeight.Bold
         )
