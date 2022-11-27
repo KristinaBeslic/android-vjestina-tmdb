@@ -6,16 +6,17 @@ import agency.five.codebase.android.movieapp.ui.component.*
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
-import android.widget.Space
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
+import agency.five.codebase.android.movieapp.ui.theme.spacing
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,7 +52,7 @@ fun MovieDetailsScreen(
 ) {
     Column(
         modifier = modifier
-            .scrollable(state = rememberScrollState(), orientation = Orientation.Vertical)
+            .verticalScroll(rememberScrollState())
     ) {
         MovieDetailsHeader(
             modifier = Modifier
@@ -70,6 +71,7 @@ fun MovieDetailsScreen(
             movieDetailsViewState = movieDetailsViewState,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.padding_large)))
     }
 }
 
@@ -168,8 +170,10 @@ fun MovieDetailsOverview(
             columns = GridCells.Fixed(3),
             modifier = Modifier
                 .fillMaxWidth()
+                .height(dimensionResource(id = R.dimen.movie_details_crew_item_section_height))
                 .padding(start = dimensionResource(id = R.dimen.movie_details_overview_text_padding_start)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium)),
+            userScrollEnabled = false,
             content = {
                 items(
                     items = movieDetailsViewState.crew,
@@ -215,7 +219,7 @@ fun TopBilledCast(
                         )
                     )
                 }
-            },
+            }
         )
     }
 }

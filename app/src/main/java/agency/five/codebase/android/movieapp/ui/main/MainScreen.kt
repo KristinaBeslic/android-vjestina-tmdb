@@ -33,16 +33,18 @@ import androidx.navigation.navArgument
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var showBottomBar by remember { mutableStateOf(true) }
-    var showBackIcon = !showBottomBar
+    val showBottomBar = when (navBackStackEntry?.destination?.route) {
+        NavigationItem.MovieDetailsDestination.route -> false
+        else -> true
+    }
+    val showBackIcon = !showBottomBar
+
     Scaffold(
         topBar = {
             TopBar(
                 navigationIcon = {
-                    if (showBackIcon) {
-                        navController.navigateUp()
+                    if (showBackIcon)
                         BackIcon(onBackClick = navController::popBackStack)
-                    }
                 }
             )
         },
@@ -75,26 +77,20 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding)
             ) {
                 composable(NavigationItem.HomeDestination.route) {
-                    showBottomBar = true
-                    showBackIcon = showBackIcon
                     HomeRoute(
                         onNavigateToMovieDetails = { movieId ->
                             navController.navigate(
                                 NavigationItem.MovieDetailsDestination.createNavigationRoute(movieId)
                             )
-                            showBottomBar = false
                         }
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
-                    showBottomBar = true
-                    showBackIcon = showBackIcon
                     FavoritesRoute(
                         onNavigateToMovieDetails = { movieId ->
                             navController.navigate(
                                 NavigationItem.MovieDetailsDestination.createNavigationRoute(movieId)
                             )
-                            showBottomBar = false
                         }
                     )
                 }
@@ -103,8 +99,6 @@ fun MainScreen() {
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
                     MovieDetailsRoute()
-                    showBottomBar = false
-                    showBackIcon = showBackIcon
                 }
             }
         }
@@ -156,7 +150,7 @@ private fun BottomNavigationBar(
         backgroundColor = MaterialTheme.colors.background
     ) {
         destinations.forEach { destination ->
-            AddItem(
+            Item(
                 destination = destination,
                 currentDestination = currentDestination,
                 onNavigateToDestination = onNavigateToDestination
@@ -166,7 +160,7 @@ private fun BottomNavigationBar(
 }
 
 @Composable
-fun RowScope.AddItem(
+fun RowScope.Item(
     destination: NavigationItem,
     currentDestination: NavDestination?,
     onNavigateToDestination: (NavigationItem) -> Unit

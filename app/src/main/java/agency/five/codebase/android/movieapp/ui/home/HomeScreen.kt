@@ -74,21 +74,26 @@ fun HomeRoute(
         onNavigateToMovieDetails = onNavigateToMovieDetails,
         onCategoryClick = { categoryId ->
             when(categoryId) {
-                0, 1, 2, 3 -> {
+                MovieCategory.POPULAR_STREAMING.ordinal,
+                MovieCategory.POPULAR_ON_TV.ordinal,
+                MovieCategory.POPULAR_FOR_RENT.ordinal,
+                MovieCategory.POPULAR_IN_THEATRES.ordinal -> {
                     popularCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                         popular,
                         MovieCategory.values()[categoryId],
                         movies
                     )
                 }
-                4, 5 -> {
+                MovieCategory.NOW_PLAYING_MOVIES.ordinal,
+                MovieCategory.NOW_PLAYING_TV.ordinal -> {
                     nowPlayingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                         nowPlaying,
                         MovieCategory.values()[categoryId],
                         movies
                     )
                 }
-                else -> {
+                MovieCategory.UPCOMING_TODAY.ordinal,
+                MovieCategory.UPCOMING_THIS_WEEK.ordinal-> {
                     upcomingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
                         upcoming,
                         MovieCategory.values()[categoryId],
