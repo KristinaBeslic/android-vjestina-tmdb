@@ -111,19 +111,19 @@ private fun TopBar(
     navigationIcon: @Composable (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(
-         title = {
-             Image(
-                 painter = painterResource(id = R.drawable.ic_logo),
-                 contentDescription = null
-             )
-         },
-         navigationIcon = {
-             navigationIcon?.invoke()
-         },
+        title = {
+            Image(
+                painter = painterResource(id = R.drawable.ic_logo),
+                contentDescription = null
+            )
+        },
+        navigationIcon = {
+            navigationIcon?.invoke()
+        },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = colorResource(id = R.color.top_bar)
         )
-     )
+    )
 }
 
 @Composable
