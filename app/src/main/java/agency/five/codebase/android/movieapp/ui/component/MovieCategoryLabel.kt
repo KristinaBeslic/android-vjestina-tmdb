@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import agency.five.codebase.android.movieapp.R
+import androidx.compose.ui.res.stringResource
 
 data class MovieCategoryLabelViewState(
     val itemId: Int,
@@ -56,7 +57,7 @@ fun MovieCategoryLabel(
                 )
             is MovieCategoryLabelTextViewState.LabelTextFromResource ->
                 Text(
-                    text = text.textRes.toString(),
+                    text = stringResource(id = text.textRes),
                     fontSize = dimensionResource(id = R.dimen.movie_category_label_font_size).value.sp,
                     style = if (movieCategoryLabelViewState.isSelected) {
                         TextStyle(

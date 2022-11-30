@@ -45,7 +45,6 @@ fun ActorCard(
                 text = actorCardViewState.name,
                 Modifier.padding(
                     start = dimensionResource(id = R.dimen.padding_small),
-                    top = dimensionResource(id = R.dimen.padding_small)
                 ),
                 fontWeight = FontWeight.Bold,
                 fontSize = dimensionResource(id = R.dimen.actor_name_font_size).value.sp
@@ -54,7 +53,6 @@ fun ActorCard(
                 text = actorCardViewState.character,
                 modifier = Modifier.padding(
                     start = dimensionResource(id = R.dimen.padding_small),
-                    top = dimensionResource(id = R.dimen.padding_small)
                 ),
                 fontSize = dimensionResource(id = R.dimen.actor_character_font_size).value.sp,
                 color = Color.Gray
