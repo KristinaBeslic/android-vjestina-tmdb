@@ -36,6 +36,7 @@ val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMoc
 
 @Composable
 fun MovieDetailsRoute(
+
 ) {
     val movieDetails by remember { mutableStateOf(movieDetailsViewState) }
     MovieDetailsScreen(movieDetails)

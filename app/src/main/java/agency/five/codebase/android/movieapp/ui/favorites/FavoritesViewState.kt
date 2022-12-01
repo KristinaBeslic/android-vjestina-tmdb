@@ -8,5 +8,5 @@ data class FavoritesMovieViewState(
 )
 
 data class FavoritesViewState(
-    val favoriteMovies: List<FavoritesMovieViewState>
+    val favoriteMovies: List<FavoritesMovieViewState> = listOf()
 )
