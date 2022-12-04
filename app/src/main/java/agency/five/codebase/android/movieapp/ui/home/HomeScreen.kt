@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 fun HomeScreenRoute(
     viewModel: HomeViewModel,
     onNavigateToMovieDetails: (Int) -> Unit
-){
+) {
     val popularCategoryViewState: HomeMovieCategoryViewState by viewModel.popularCategoryHomeViewState.collectAsState()
     val nowPlayingCategoryViewState: HomeMovieCategoryViewState by viewModel.nowPlayingCategoryHomeViewState.collectAsState()
     val upcomingCategoryViewState: HomeMovieCategoryViewState by viewModel.upcomingCategoryHomeViewState.collectAsState()

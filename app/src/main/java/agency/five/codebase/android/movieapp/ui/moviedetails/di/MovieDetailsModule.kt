@@ -6,7 +6,7 @@ import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetails
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val movieDetailsModule = module{
+val movieDetailsModule = module {
     viewModel { parameters ->
         MovieDetailsViewModel(
             movieId = parameters.get(),

@@ -16,17 +16,18 @@ class MovieDetailsViewModel(
     movieDetailsMapper: MovieDetailsMapper,
 ) : ViewModel() {
     private val _movieDetailsViewState = MutableStateFlow(MovieDetailsViewState())
-    val movieDetailsViewState: StateFlow<MovieDetailsViewState> = _movieDetailsViewState.asStateFlow()
+    val movieDetailsViewState: StateFlow<MovieDetailsViewState> =
+        _movieDetailsViewState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            movieRepository.movieDetails(movieId).collect(){
+            movieRepository.movieDetails(movieId).collect() {
                 _movieDetailsViewState.value = movieDetailsMapper.toMovieDetailsViewState(it)
             }
         }
     }
 
-    fun toggleFavorite(movieId: Int){
+    fun toggleFavorite(movieId: Int) {
         viewModelScope.launch {
             movieRepository.toggleFavorite(movieId)
         }

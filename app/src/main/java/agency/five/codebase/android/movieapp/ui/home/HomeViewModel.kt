@@ -53,29 +53,29 @@ class HomeViewModel(
                     _popularCategoryHomeViewState.value =
                         homeScreenMapper.toHomeMovieCategoryViewState(
                             movieCategories = popular,
-                            selectedMovieCategory = MovieCategory.POPULAR_STREAMING,
+                            selectedMovieCategory = popularSelected.value,
                             movies = it
                         )
                 }
         }
         viewModelScope.launch {
-            movieRepository.popularMovies(MovieCategory.NOW_PLAYING_MOVIES)
+            movieRepository.nowPlayingMovies(MovieCategory.NOW_PLAYING_MOVIES)
                 .collect {
                     _nowPlayingCategoryHomeViewState.value =
                         homeScreenMapper.toHomeMovieCategoryViewState(
                             movieCategories = nowPlaying,
-                            selectedMovieCategory = MovieCategory.NOW_PLAYING_MOVIES,
+                            selectedMovieCategory = nowPlayingSelected.value,
                             movies = it
                         )
                 }
         }
         viewModelScope.launch {
-            movieRepository.popularMovies(MovieCategory.UPCOMING_TODAY)
+            movieRepository.upcomingMovies(MovieCategory.UPCOMING_TODAY)
                 .collect {
                     _upcomingCategoryHomeViewState.value =
                         homeScreenMapper.toHomeMovieCategoryViewState(
                             movieCategories = upcoming,
-                            selectedMovieCategory = MovieCategory.UPCOMING_TODAY,
+                            selectedMovieCategory = upcomingSelected.value,
                             movies = it
                         )
                 }
@@ -88,8 +88,8 @@ class HomeViewModel(
         }
     }
 
-    fun switchCategory(categoryId: Int){
-        when(categoryId){
+    fun switchCategory(categoryId: Int) {
+        when (categoryId) {
             MovieCategory.POPULAR_STREAMING.ordinal,
             MovieCategory.POPULAR_ON_TV.ordinal,
             MovieCategory.POPULAR_FOR_RENT.ordinal,
@@ -105,5 +105,6 @@ class HomeViewModel(
                 upcomingSelected.update { MovieCategory.values()[categoryId] }
             }
         }
+
     }
 }
