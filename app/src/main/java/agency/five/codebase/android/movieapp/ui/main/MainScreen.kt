@@ -4,8 +4,9 @@ import agency.five.codebase.android.movieapp.R
 import agency.five.codebase.android.movieapp.navigation.MOVIE_ID_KEY
 import agency.five.codebase.android.movieapp.navigation.NavigationItem
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesRoute
-import agency.five.codebase.android.movieapp.ui.home.HomeRoute
+import agency.five.codebase.android.movieapp.ui.home.HomeScreenRoute
 import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsRoute
+import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -27,6 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +81,8 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding)
             ) {
                 composable(NavigationItem.HomeDestination.route) {
-                    HomeRoute(
+                    HomeScreenRoute(
+                        viewModel = getViewModel(),
                         onNavigateToMovieDetails = { movieId ->
                             navController.navigate(
                                 NavigationItem.MovieDetailsDestination.createNavigationRoute(movieId)
@@ -87,6 +92,7 @@ fun MainScreen() {
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
                     FavoritesRoute(
+                        viewModel = getViewModel(),
                         onNavigateToMovieDetails = { movieId ->
                             navController.navigate(
                                 NavigationItem.MovieDetailsDestination.createNavigationRoute(movieId)
@@ -98,7 +104,9 @@ fun MainScreen() {
                     route = NavigationItem.MovieDetailsDestination.route,
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
-                    MovieDetailsRoute()
+                    val movieId = it.arguments?.getInt(MOVIE_ID_KEY)
+                    val movieDetailsViewModel = getViewModel<MovieDetailsViewModel>(parameters = { parametersOf(movieId) })
+                    MovieDetailsRoute(movieDetailsViewModel)
                 }
             }
         }

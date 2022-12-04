@@ -24,7 +24,7 @@ class FakeMovieRepository(
         }
         .flowOn(ioDispatcher)
 
-    fun getMovieDetails(movieId: Int): MovieDetails = MovieDetails(
+    private fun getMovieDetails(movieId: Int): MovieDetails = MovieDetails(
         movie = getMoviesList().first { it.id == movieId },
         voteAverage = MoviesMock.getMovieDetails().voteAverage,
         releaseDate = MoviesMock.getMovieDetails().releaseDate,

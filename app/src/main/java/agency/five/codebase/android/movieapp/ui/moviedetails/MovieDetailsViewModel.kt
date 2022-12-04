@@ -6,24 +6,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
+    private val movieId: Int,
     private val movieRepository: MovieRepository,
     movieDetailsMapper: MovieDetailsMapper,
 ) : ViewModel() {
     private val _movieDetailsViewState = MutableStateFlow(MovieDetailsViewState())
-    val movieDetailsViewState: StateFlow<MovieDetailsViewState> = _movieDetailsViewState
+    val movieDetailsViewState: StateFlow<MovieDetailsViewState> = _movieDetailsViewState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            movieRepository.movieDetails(_movieDetailsViewState.value.id)
-                .collect {
-                    _movieDetailsViewState.value = movieDetailsMapper.toMovieDetailsViewState(it)
-                }
+            movieRepository.movieDetails(movieId).collect(){
+                _movieDetailsViewState.value = movieDetailsMapper.toMovieDetailsViewState(it)
+            }
         }
     }
-    fun toggleFavorite(movieId: Int) {
+
+    fun toggleFavorite(movieId: Int){
         viewModelScope.launch {
             movieRepository.toggleFavorite(movieId)
         }
