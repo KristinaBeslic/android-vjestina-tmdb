@@ -15,7 +15,7 @@ class MovieDetailsViewModel(
     private val movieRepository: MovieRepository,
     movieDetailsMapper: MovieDetailsMapper,
 ) : ViewModel() {
-    private val _movieDetailsViewState = MutableStateFlow(MovieDetailsViewState())
+    private val _movieDetailsViewState = MutableStateFlow(MovieDetailsViewState.EMPTY)
     val movieDetailsViewState: StateFlow<MovieDetailsViewState> =
         _movieDetailsViewState.asStateFlow()
 

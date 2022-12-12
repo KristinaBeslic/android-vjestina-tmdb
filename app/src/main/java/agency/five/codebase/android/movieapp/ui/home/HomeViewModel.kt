@@ -34,15 +34,16 @@ class HomeViewModel(
     private val nowPlayingSelected = MutableStateFlow(MovieCategory.NOW_PLAYING_MOVIES)
     private val upcomingSelected = MutableStateFlow(MovieCategory.UPCOMING_TODAY)
 
-    private val _popularCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState())
+    private val _popularCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val popularCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
         _popularCategoryHomeViewState.asStateFlow()
 
-    private val _nowPlayingCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState())
+    private val _nowPlayingCategoryHomeViewState =
+        MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val nowPlayingCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
         _nowPlayingCategoryHomeViewState.asStateFlow()
 
-    private val _upcomingCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState())
+    private val _upcomingCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val upcomingCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
         _upcomingCategoryHomeViewState.asStateFlow()
 

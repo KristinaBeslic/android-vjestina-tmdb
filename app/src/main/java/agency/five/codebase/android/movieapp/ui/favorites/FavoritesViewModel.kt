@@ -12,7 +12,7 @@ class FavoritesViewModel(
     private val movieRepository: MovieRepository,
     favoritesScreenMapper: FavoritesMapper,
 ) : ViewModel() {
-    private val _favoritesViewState = MutableStateFlow(FavoritesViewState())
+    private val _favoritesViewState = MutableStateFlow(FavoritesViewState.EMPTY)
     val favoritesViewState: StateFlow<FavoritesViewState> = _favoritesViewState
 
     init {
