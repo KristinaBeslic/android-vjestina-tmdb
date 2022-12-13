@@ -120,6 +120,7 @@ fun MovieDetailsHeader(
             FavouriteButton(
                 color = colorResource(id = R.color.black_favourite_btn),
                 onClick = { onFavoriteClick(movieDetailsViewState.id) },
+                isFavourite = movieDetailsViewState.isFavorite,
                 modifier = Modifier
                     .padding(start = dimensionResource(id = R.dimen.padding_large))
             )
