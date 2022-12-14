@@ -5,10 +5,7 @@ import agency.five.codebase.android.movieapp.model.MovieCategory
 import agency.five.codebase.android.movieapp.ui.home.mapper.HomeScreenMapper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -34,54 +31,65 @@ class HomeViewModel(
     private val nowPlayingSelected = MutableStateFlow(MovieCategory.NOW_PLAYING_MOVIES)
     private val upcomingSelected = MutableStateFlow(MovieCategory.UPCOMING_TODAY)
 
-    private val _popularCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val popularCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
-        _popularCategoryHomeViewState.asStateFlow()
+        combine(
+            movieRepository.popularMovies(MovieCategory.POPULAR_STREAMING),
+            popularSelected
+        ) { movies, selectedCategory ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                movieCategories = popular,
+                selectedMovieCategory = selectedCategory,
+                movies = movies
+            )
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(
+                    stopTimeoutMillis = 1000L,
+                    replayExpirationMillis = 0L
+                ),
+                initialValue = HomeMovieCategoryViewState.EMPTY
+            )
 
-    private val _nowPlayingCategoryHomeViewState =
-        MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val nowPlayingCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
-        _nowPlayingCategoryHomeViewState.asStateFlow()
+        combine(
+            movieRepository.popularMovies(MovieCategory.NOW_PLAYING_TV),
+            nowPlayingSelected
+        ) { movies, selectedCategory ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                movieCategories = nowPlaying,
+                selectedMovieCategory = selectedCategory,
+                movies = movies
+            )
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(
+                    stopTimeoutMillis = 1000L,
+                    replayExpirationMillis = 0L
+                ),
+                initialValue = HomeMovieCategoryViewState.EMPTY
+            )
 
-    private val _upcomingCategoryHomeViewState = MutableStateFlow(HomeMovieCategoryViewState.EMPTY)
     val upcomingCategoryHomeViewState: StateFlow<HomeMovieCategoryViewState> =
-        _upcomingCategoryHomeViewState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            movieRepository.popularMovies(MovieCategory.POPULAR_STREAMING)
-                .collect {
-                    _popularCategoryHomeViewState.value =
-                        homeScreenMapper.toHomeMovieCategoryViewState(
-                            movieCategories = popular,
-                            selectedMovieCategory = popularSelected.value,
-                            movies = it
-                        )
-                }
+        combine(
+            movieRepository.upcomingMovies(MovieCategory.UPCOMING_TODAY),
+            upcomingSelected
+        ){ movies, selectedCategory ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                movieCategories = upcoming,
+                selectedMovieCategory = selectedCategory,
+                movies = movies
+            )
         }
-        viewModelScope.launch {
-            movieRepository.nowPlayingMovies(MovieCategory.NOW_PLAYING_MOVIES)
-                .collect {
-                    _nowPlayingCategoryHomeViewState.value =
-                        homeScreenMapper.toHomeMovieCategoryViewState(
-                            movieCategories = nowPlaying,
-                            selectedMovieCategory = nowPlayingSelected.value,
-                            movies = it
-                        )
-                }
-        }
-        viewModelScope.launch {
-            movieRepository.upcomingMovies(MovieCategory.UPCOMING_TODAY)
-                .collect {
-                    _upcomingCategoryHomeViewState.value =
-                        homeScreenMapper.toHomeMovieCategoryViewState(
-                            movieCategories = upcoming,
-                            selectedMovieCategory = upcomingSelected.value,
-                            movies = it
-                        )
-                }
-        }
-    }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(
+                    stopTimeoutMillis = 1000L,
+                    replayExpirationMillis = 0L
+                ),
+                initialValue = HomeMovieCategoryViewState.EMPTY
+            )
 
     fun toggleFavorite(movieId: Int) {
         viewModelScope.launch {
