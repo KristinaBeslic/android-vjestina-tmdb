@@ -6,7 +6,6 @@ import agency.five.codebase.android.movieapp.model.Movie
 import agency.five.codebase.android.movieapp.model.MovieDetails
 
 object MoviesMock {
-
     fun getMoviesList(): List<Movie> = listOf(
         Movie(
             id = 1,
@@ -70,6 +69,29 @@ object MoviesMock {
                 name = "Tom Holland",
                 character = "Peter Parker / Spider-Man",
                 imageUrl = "https://image.tmdb.org/t/p/w200/bBRlrpJm9XkNSg0YT5LCaxqoFMX.jpg"
+            )
+        },
+    )
+
+    fun getMovieDetails(movieId: Int): MovieDetails = MovieDetails(
+        movie = getMoviesList().first { it.id == movieId },
+        voteAverage = 7.9f,
+        releaseDate = "02/05/2008",
+        language = "US",
+        runtime = 126,
+        crew = List(6) {
+            Crewman(
+                id = it,
+                name = "Jon Favreau",
+                job = "Director",
+            )
+        },
+        cast = List(6) {
+            Actor(
+                id = it,
+                name = "Robert Downey Jr.",
+                character = "Tony Stark",
+                imageUrl = "https://www.themoviedb.org/t/p/w200/5qHNjhtjMD4YWH3UP0rm4tKwxCL.jpg"
             )
         },
     )
